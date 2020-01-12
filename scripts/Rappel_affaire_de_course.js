@@ -1,7 +1,7 @@
 // Variables used by Scriptable.
 // These must be at the very top of the file. Do not edit.
 // icon-color: pink; icon-glyph: magic;
-const efCalendarEventName = 'EF';
+const EventLib = importModule('libs/event');
 const CalendarLib = importModule('libs/calendar');
 let runningCalendar = await Calendar.forEventsByTitle(CalendarLib.runningName);
 let weekRunningCalendarEvents = await CalendarEvent.thisWeek([runningCalendar]);
@@ -15,21 +15,9 @@ Script.complete();
 
 function extractEfWeekRunningCalendarEvents(runningCalendarEvents) {
   return runningCalendarEvents
-    .filter(event => isFuture(event))
-    .filter(event => !isAllDay(event))
-    .filter(event => isEventTitleIncludesEF(event));
-}
-
-function isFuture(event) {
-  return event.startDate.getTime() > new Date().getTime();
-}
-
-function isAllDay(event) {
-  return event.isAllDay;
-}
-
-function isEventTitleIncludesEF(event) {
-  return event.title.includes(efCalendarEventName);
+    .filter(event => EventLib.isFuture(event))
+    .filter(event => !EventLib.isAllDay(event))
+    .filter(event => EventLib.isTitleIncludes(event, EventLib.efName));
 }
 
 function createReminder(calendarEvent, reminderCalendar) {
