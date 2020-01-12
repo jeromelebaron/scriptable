@@ -1,0 +1,1 @@
+module.exports.rappelName = 'Rappels';

@@ -3,12 +3,13 @@
 // icon-color: pink; icon-glyph: magic;
 const EventLib = importModule('libs/event');
 const CalendarLib = importModule('libs/calendar');
+const ReminderLib = importModule('libs/reminder');
+
 let runningCalendar = await Calendar.forEventsByTitle(CalendarLib.runningName);
 let weekRunningCalendarEvents = await CalendarEvent.thisWeek([runningCalendar]);
 let efWeekRunningCalendarEvents = extractEfWeekRunningCalendarEvents(weekRunningCalendarEvents);
 
-const rappelReminderName = 'Rappels';
-let rappelCalendar = await Calendar.forRemindersByTitle(rappelReminderName);
+let rappelCalendar = await Calendar.forRemindersByTitle(ReminderLib.rappelName);
 efWeekRunningCalendarEvents.forEach(event => createReminder(event, rappelCalendar));
 
 Script.complete();
