@@ -24,6 +24,13 @@ function extractEfWeekRunningCalendarEvents(runningCalendarEvents) {
 function createReminder(calendarEvent, reminderCalendar) {
   let newReminder = new Reminder();
   newReminder.title = 'Préparer les affaires de course';
+  newReminder.notes = `- serviette
+- gant
+- gel douche
+- sous vêtements de rechange
+- pantalon
+- veste
+- teeshirt`;
   newReminder.calendar = reminderCalendar;
   newReminder.dueDate = createMorningDateDayBeforeFromCalendarEvent(calendarEvent);
   newReminder.save();
