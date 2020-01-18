@@ -15,6 +15,7 @@ let efWeekRunningCalendarEvents = extractEfWeekRunningCalendarEvents(weekRunning
 
 let rappelCalendar = await Calendar.forRemindersByTitle(ReminderLib.rappelName);
 efWeekRunningCalendarEvents.forEach(event => createReminder(event, rappelCalendar));
+createFridayReminder(rappelCalendar);
 
 Script.complete();
 
@@ -45,4 +46,14 @@ function createMorningDateDayBeforeFromCalendarEvent(calendarEvent) {
   const previousDay = DateLib.getPreviousDay(startDate);
   const previousDayAtSevenAM = DateLib.addHours(previousDay, sevenAM);
   return DateLib.addMinutes(previousDayAtSevenAM, thirtyMinutes);
+}
+
+function createFridayReminder(reminderCalendar) {
+  let newReminder = new Reminder();
+  newReminder.title = 'Ramener les affaires à laver';
+  newReminder.notes = `- serviette
+- gant`;
+  newReminder.calendar = reminderCalendar;
+  newReminder.dueDate = null;
+  newReminder.save();
 }
