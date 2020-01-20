@@ -4,6 +4,10 @@
 const EventLib = importModule('libs/event');
 const CalendarLib = importModule('libs/calendar');
 const ReminderLib = importModule('libs/reminder');
+const DateLib = importModule('libs/date');
+
+const sevenAM = 7;
+const thirtyMinutes = 30;
 
 let runningCalendar = await Calendar.forEventsByTitle(CalendarLib.runningName);
 let weekRunningCalendarEvents = await CalendarEvent.thisWeek([runningCalendar]);
@@ -37,6 +41,8 @@ function createReminder(calendarEvent, reminderCalendar) {
 }
 
 function createMorningDateDayBeforeFromCalendarEvent(calendarEvent) {
-  let startDate = calendarEvent.startDate;
-  return new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - 1, 7, 30, 0, 0);
+  const startDate = calendarEvent.startDate;
+  const previousDay = DateLib.getPreviousDay(startDate);
+  const previousDayAtSevenAM = DateLib.addHours(previousDay, sevenAM);
+  return DateLib.addMinutes(previousDayAtSevenAM, thirtyMinutes);
 }
